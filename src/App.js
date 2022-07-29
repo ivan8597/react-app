@@ -1,24 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Costs from "./components/Costs";
+import NewCost from "./components/NewCost/NewCost";
+const INITIAL_COST = [
+  {
+    id: "c1",
+    date: new Date(2022, 4, 9),
+    description: "Холодильник",
+    amount: 999.99
+  },
+  {
+    id: "c2",
+    date: new Date(2022, 9, 2),
+    description: "Mackbook",
+    amount: 999.99
+  },
+  {
+    id: "c3",
+    date: new Date(2022, 9, 9),
+    description: "Телевизор",
+    amount: 999.99
+  },
+];
 
 function App() {
+
+
+  const [costs, setCosts] = useState(INITIAL_COST)
+
+  const addCostHandler = (cost) => {
+    setCosts(prevCosts => {
+      return [cost,...prevCosts]
+    })
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+       <div>
+      <NewCost onAddCost={addCostHandler} />
+      <Costs costs={costs} />
+       </div>
+    </>
   );
 }
 
